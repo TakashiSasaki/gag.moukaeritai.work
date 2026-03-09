@@ -1,0 +1,8 @@
+feat: update GAG landing page, documentation, and official links
+
+- Updated index.html with "Get A Grip" project name and description.
+- Added PyPI project link and author profile links (PyPI & X.com) to index.html.
+- Implemented premium hover effects and footer in index.html.
+- Created README.md with project overview and official links.
+- Populated AGENTS.md with project context, PyPI info, and maintenance guidelines (including sitemap maintenance).
+- Verified sitemap.xml consistency.
