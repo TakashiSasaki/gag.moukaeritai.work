@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GAG - gag.moukaeritai.work</title>
+  <meta name="description" content="GAG - gag.moukaeritai.work">
+
+  <!-- Canonical -->
+  <link rel="canonical" href="https://gag.moukaeritai.work/">
+
+  <!-- PWA -->
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#1a1a2e">
+
+  <!-- Apple PWA -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="GAG">
+  <link rel="apple-touch-icon" href="/icons/icon-192x192.png">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" sizes="192x192" href="/icons/icon-192x192.png">
+  <link rel="icon" type="image/png" sizes="512x512" href="/icons/icon-512x512.png">
+
+  <style>
+    *,
+    *::before,
+    *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --color-bg: #0f0f1a;
+      --color-surface: #1a1a2e;
+      --color-primary: #e94560;
+      --color-primary-glow: rgba(233, 69, 96, 0.3);
+      --color-secondary: #16213e;
+      --color-text: #eaeaea;
+      --color-text-muted: #8892a4;
+      --font-sans: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
+    }
+
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
+
+    body {
+      font-family: var(--font-sans);
+      background: var(--color-bg);
+      color: var(--color-text);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      position: relative;
+    }
+
+    /* Animated background */
+    body::before {
+      content: '';
+      position: fixed;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background:
+        radial-gradient(circle at 20% 80%, var(--color-primary-glow) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(22, 33, 62, 0.8) 0%, transparent 50%),
+        radial-gradient(circle at 50% 50%, rgba(26, 26, 46, 0.5) 0%, transparent 70%);
+      animation: bgShift 20s ease-in-out infinite alternate;
+      z-index: -1;
+    }
+
+    @keyframes bgShift {
+      0% { transform: translate(0, 0) rotate(0deg); }
+      100% { transform: translate(-5%, -5%) rotate(3deg); }
+    }
+
+    .container {
+      text-align: center;
+      padding: 2rem;
+      max-width: 600px;
+    }
+
+    .logo {
+      font-size: 4rem;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      background: linear-gradient(135deg, var(--color-primary), #ff6b8a, var(--color-primary));
+      background-size: 200% 200%;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      animation: gradientShift 4s ease-in-out infinite;
+      margin-bottom: 0.5rem;
+    }
+
+    @keyframes gradientShift {
+      0%, 100% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+    }
+
+    .subtitle {
+      font-size: 0.875rem;
+      color: var(--color-text-muted);
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      margin-bottom: 2rem;
+    }
+
+    .divider {
+      width: 60px;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--color-primary), transparent);
+      margin: 0 auto 2rem;
+    }
+
+    .description {
+      font-size: 1rem;
+      line-height: 1.8;
+      color: var(--color-text-muted);
+      font-weight: 300;
+    }
+
+    /* Floating particles */
+    .particles {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    .particle {
+      position: absolute;
+      width: 4px;
+      height: 4px;
+      background: var(--color-primary);
+      border-radius: 50%;
+      opacity: 0;
+      animation: float 8s ease-in-out infinite;
+    }
+
+    .particle:nth-child(1) { left: 10%; animation-delay: 0s; animation-duration: 10s; }
+    .particle:nth-child(2) { left: 25%; animation-delay: 2s; animation-duration: 12s; }
+    .particle:nth-child(3) { left: 40%; animation-delay: 4s; animation-duration: 8s; }
+    .particle:nth-child(4) { left: 55%; animation-delay: 1s; animation-duration: 14s; }
+    .particle:nth-child(5) { left: 70%; animation-delay: 3s; animation-duration: 9s; }
+    .particle:nth-child(6) { left: 85%; animation-delay: 5s; animation-duration: 11s; }
+
+    @keyframes float {
+      0% {
+        transform: translateY(100vh) scale(0);
+        opacity: 0;
+      }
+      10% {
+        opacity: 0.6;
+      }
+      90% {
+        opacity: 0.2;
+      }
+      100% {
+        transform: translateY(-10vh) scale(1);
+        opacity: 0;
+      }
+    }
+
+    /* Offline indicator */
+    .offline-banner {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      background: var(--color-secondary);
+      color: var(--color-text-muted);
+      text-align: center;
+      padding: 0.5rem;
+      font-size: 0.75rem;
+      letter-spacing: 0.05em;
+      transform: translateY(-100%);
+      transition: transform 0.3s ease;
+      z-index: 100;
+    }
+
+    .offline-banner.visible {
+      transform: translateY(0);
+    }
+  </style>
+</head>
+<body>
+  <div id="offline-banner" class="offline-banner">
+    ⚡ オフラインモード — キャッシュされたコンテンツを表示しています
+  </div>
+
+  <div class="particles">
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+  </div>
+
+  <main class="container">
+    <h1 class="logo">GAG</h1>
+    <p class="subtitle">gag.moukaeritai.work</p>
+    <div class="divider"></div>
+    <p class="description">
+      このサイトは準備中です。
+    </p>
+  </main>
+
+  <script>
+    // Service Worker Registration
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/sw.js')
+          .then(registration => {
+            console.log('SW registered:', registration.scope);
+          })
+          .catch(error => {
+            console.error('SW registration failed:', error);
+          });
+      });
+    }
+
+    // Offline detection
+    const offlineBanner = document.getElementById('offline-banner');
+
+    function updateOnlineStatus() {
+      if (!navigator.onLine) {
+        offlineBanner.classList.add('visible');
+      } else {
+        offlineBanner.classList.remove('visible');
+      }
+    }
+
+    window.addEventListener('online', updateOnlineStatus);
+    window.addEventListener('offline', updateOnlineStatus);
+    updateOnlineStatus();
+  </script>
+</body>
+</html>
